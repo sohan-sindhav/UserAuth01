@@ -1,7 +1,7 @@
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
-const API_URL = "http://localhost:5000/api/v1/user";
+const API_URL = `https://userauth01.onrender.com/api/v1/user`;
 
 export async function registerUser(username, email, password) {
   const response = await axios.post(`${API_URL}/create`, {
