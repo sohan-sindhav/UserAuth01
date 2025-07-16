@@ -1,20 +1,25 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import dotenv from "dotenv";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(""); // reset error
     try {
       await login(email, password);
     } catch (err) {
-      alert("Login failed");
+      setError(
+        "Login failed. If this is your first request in a while, the server may be starting up. Please wait 1–2 minutes and try again."
+      );
+      // Optional: still show popup
+      // alert("Login failed");
     }
   };
 
@@ -63,6 +68,13 @@ export default function Login() {
               required
             />
           </div>
+
+          {error && (
+            <p className="text-sm text-red-400 bg-red-900/20 px-3 py-2 rounded-lg">
+              {error}
+            </p>
+          )}
+
           <button
             type="submit"
             className="w-full bg-[#D0BCFF] text-[#381E72] py-3 px-4 rounded-full 
@@ -72,6 +84,7 @@ export default function Login() {
             Sign in
           </button>
         </form>
+
         <div className="mt-6 text-center">
           <button
             onClick={() => navigate("/register")}
