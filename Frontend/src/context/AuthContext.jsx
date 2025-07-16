@@ -39,7 +39,7 @@ export function AuthProvider({ children }) {
     try {
       await logoutUser();
       setUser(null);
-      navigate("/login");
+      navigate("/");
       window.location.reload(); // Force full reset
     } catch (err) {
       console.error("Logout error:", err);
